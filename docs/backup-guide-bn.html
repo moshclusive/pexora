@@ -1,0 +1,753 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pexora - Google Sheet Backup Setup Guide (বাংলা নির্দেশিকা)</title>
+  <style>
+    :root {
+      --bg: #0B0F17;
+      --card-bg: #141B26;
+      --card-border: #232D3F;
+      --accent: #6366F1;
+      --accent-hover: #4F46E5;
+      --accent-glow: rgba(99, 102, 241, 0.25);
+      --success: #10B981;
+      --text: #F1F5F9;
+      --text-muted: #94A3B8;
+      --code-bg: #0A0E14;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', system-ui, -apple-system, sans-serif; }
+    body { background-color: var(--bg); color: var(--text); line-height: 1.7; padding: 40px 20px; }
+    .container { max-width: 900px; margin: 0 auto; }
+    
+    header { text-align: center; margin-bottom: 40px; padding-bottom: 24px; border-bottom: 1px solid var(--card-border); }
+    .badge { display: inline-flex; align-items: center; gap: 8px; background: rgba(99,102,241,0.15); color: #818CF8; border: 1px solid rgba(99,102,241,0.3); padding: 6px 16px; border-radius: 9999px; font-size: 13px; font-weight: 600; margin-bottom: 14px; }
+    .badge-dot { width: 8px; height: 8px; border-radius: 50%; background: #10B981; box-shadow: 0 0 10px #10B981; }
+    h1 { font-size: 28px; font-weight: 800; color: #FFFFFF; margin-bottom: 10px; }
+    .subtitle { color: var(--text-muted); font-size: 15px; max-width: 650px; margin: 0 auto; }
+
+    .step-card {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 14px;
+      padding: 26px;
+      margin-bottom: 26px;
+      box-shadow: 0 10px 25px -5px rgba(0,0,0,0.3);
+      position: relative;
+    }
+    .step-header { display: flex; align-items: center; gap: 14px; margin-bottom: 16px; }
+    .step-num {
+      width: 38px; height: 38px; border-radius: 10px; background: var(--accent); color: white;
+      display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 17px;
+      flex-shrink: 0; box-shadow: 0 0 15px var(--accent-glow);
+    }
+    .step-title { font-size: 19px; font-weight: 700; color: #FFFFFF; }
+    .step-content { color: #CBD5E1; font-size: 14.5px; padding-left: 52px; }
+    .step-content p { margin-bottom: 12px; }
+    .step-content ul, .step-content ol { margin-left: 20px; margin-bottom: 12px; }
+    .step-content li { margin-bottom: 6px; }
+
+    .highlight-box {
+      background: rgba(99,102,241,0.08);
+      border-left: 4px solid var(--accent);
+      padding: 12px 16px;
+      border-radius: 0 8px 8px 0;
+      margin: 14px 0;
+      font-size: 14px;
+    }
+    .warning-box {
+      background: rgba(245, 158, 11, 0.08);
+      border-left: 4px solid #F59E0B;
+      padding: 12px 16px;
+      border-radius: 0 8px 8px 0;
+      margin: 14px 0;
+      font-size: 14px;
+      color: #FDE68A;
+    }
+
+    .code-container { position: relative; margin: 16px 0; }
+    .code-box {
+      background: var(--code-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 10px;
+      padding: 16px;
+      font-family: 'Consolas', 'Courier New', monospace;
+      font-size: 12.5px;
+      color: #E2E8F0;
+      max-height: 280px;
+      overflow-y: auto;
+      white-space: pre-wrap;
+      word-break: break-all;
+    }
+    .copy-btn {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      background: var(--accent);
+      color: white;
+      border: none;
+      padding: 8px 16px;
+      border-radius: 6px;
+      font-size: 12px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .copy-btn:hover { background: var(--accent-hover); }
+
+    .key-badge {
+      display: inline-block;
+      background: #1E293B;
+      border: 1px solid #475569;
+      color: #38BDF8;
+      padding: 2px 8px;
+      border-radius: 4px;
+      font-family: monospace;
+      font-size: 13px;
+    }
+
+    footer { text-align: center; margin-top: 40px; color: var(--text-muted); font-size: 13px; }
+  </style>
+</head>
+<body>
+
+<div class="container">
+  <header>
+    <div class="badge"><span class="badge-dot"></span> Pexora 2-Way Sync Engine</div>
+    <h1>Pexora &mdash; Google Sheet ক্লাউড ব্যাকআপ সেটআপ নির্দেশিকা</h1>
+    <p class="subtitle">সহজ ৪টি ধাপে আপনার প্রম্পট, ক্যাটেগরি এবং ভ্যারিয়েবল সরাসরি আপনার ব্যক্তিগত Google Sheet-এ লাইভ ব্যাকআপ ও অটো-সিঙ্ক হিসেবে সেটআপ করুন।</p>
+  </header>
+
+  <!-- STEP 1 -->
+  <div class="step-card">
+    <div class="step-header">
+      <div class="step-num">১</div>
+      <div class="step-title">নতুন একটি Google Sheet তৈরি করুন</div>
+    </div>
+    <div class="step-content">
+      <p>আপনার পছন্দের গুগল অ্যাকাউন্টে লগইন করে একটি নতুন স্প্রেডশীট ওপেন করুন:</p>
+      <ul>
+        <li>ব্রাউজারে যান: <a href="https://sheets.new" target="_blank" style="color: #60A5FA;">sheets.new</a></li>
+        <li>শীটটির নাম দিন: <strong style="color: #38BDF8;">Pexora Backup</strong></li>
+      </ul>
+      <div class="highlight-box">
+        💡 <strong>টিপ:</strong> শীটটির ভেতরে নিজে কোনো কলাম বা ট্যাব তৈরি করার প্রয়োজন নেই। Pexora সফটওয়্যার স্বয়ংক্রিয়ভাবে সমস্ত ট্যাব ও কলাম গুছিয়ে সাজিয়ে দিবে।
+      </div>
+    </div>
+  </div>
+
+  <!-- STEP 2 -->
+  <div class="step-card">
+    <div class="step-header">
+      <div class="step-num">২</div>
+      <div class="step-title">Apps Script কোড যুক্ত করুন</div>
+    </div>
+    <div class="step-content">
+      <p>Google Sheet-এর ভেতর থেকে Apps Script এডিটর খুলুন:</p>
+      <ol>
+        <li>শীটের উপরের মেন্যু থেকে <span class="key-badge">Extensions</span> &gt; <span class="key-badge">Apps Script</span>-এ ক্লিক করুন।</li>
+        <li>এডিটরে পূর্বে থাকা <span class="key-badge">function myFunction() { }</span> লিখা সম্পূর্ণ মুছে ফেলুন।</li>
+        <li>নিচের বাটনে ক্লিক করে পুরো কোডটি কপি করে সেখানে পেস্ট করুন এবং <span class="key-badge">Ctrl + S</span> চেপে সেভ করুন:</li>
+      </ol>
+
+      <div class="code-container">
+        <button class="copy-btn" id="copyCodeBtn" onclick="copyAppScriptCode()">কপি করুন</button>
+        <pre class="code-box" id="appScriptCodeBox">/**
+ * ==============================================================================
+ * PEXORA - GOOGLE APPS SCRIPT BACKUP &amp; 2-WAY SYNC ENGINE
+ * ==============================================================================
+ * Version: 3.2.0
+ * Developer: Moshiur Rahman (Moshclusive)
+ * Description: 
+ *   Complete cloud backup and two-way sync engine for Pexora (Professional Prompt Workspace).
+ *   Saves prompts, categories, variables, settings, and full lossless state in Google Sheets.
+ * 
+ * SETUP INSTRUCTIONS:
+ *   1. Create a new Google Spreadsheet and name it "Pexora Backup".
+ *   2. Go to: Extensions &gt; Apps Script.
+ *   3. Delete any code in Code.gs and paste this entire code.
+ *   4. Click "Deploy" &gt; "New deployment".
+ *   5. Select type: "Web app".
+ *   6. Set "Execute as": "Me".
+ *   7. Set "Who has access": "Anyone" (Required for Pexora to communicate).
+ *   8. Click "Deploy", authorize access, and copy the "Web app URL".
+ *   9. In Pexora, click "Backup" button and paste your Web app URL. Done!
+ * ==============================================================================
+ */
+
+var TAB_PROMPTS = "Prompts";
+var TAB_CATEGORIES = "Categories";
+var TAB_RAW_BACKUP = "_raw_snapshot";
+
+function doGet(e) {
+  return handleRequest(e);
+}
+
+function doPost(e) {
+  return handleRequest(e);
+}
+
+function handleRequest(e) {
+  try {
+    var params = (e &amp;&amp; e.parameter) ? e.parameter : {};
+    var postData = {};
+    if (e &amp;&amp; e.postData &amp;&amp; e.postData.contents) {
+      try {
+        postData = JSON.parse(e.postData.contents);
+      } catch (err) {
+        // Fallback for url-encoded form post
+      }
+    }
+
+    var data = Object.assign({}, params, postData);
+    var action = (data.action || '').trim().toLowerCase();
+
+    // Browser visit without action -&gt; Render Web Dashboard
+    if (!action || action === 'dashboard') {
+      return renderDashboard();
+    }
+
+    var ss = SpreadsheetApp.getActiveSpreadsheet();
+
+    if (action === 'backup' || action === 'sync_push') {
+      return handleBackup(ss, data);
+    } else if (action === 'restore' || action === 'get_backup' || action === 'sync_pull') {
+      return handleRestore(ss, data);
+    } else if (action === 'stats' || action === 'ping') {
+      return handleStats(ss);
+    } else {
+      return jsonResponse({
+        success: false,
+        code: 'UNKNOWN_ACTION',
+        message: 'Action not supported. Available actions: backup, restore, stats, ping.'
+      });
+    }
+  } catch (err) {
+    return jsonResponse({
+      success: false,
+      code: 'SERVER_ERROR',
+      message: 'Server error: ' + (err.message || String(err))
+    });
+  }
+}
+
+/**
+ * Handle incoming backup payload from Pexora
+ */
+function handleBackup(ss, data) {
+  var now = new Date();
+  var timestampIso = now.toISOString();
+
+  var promptsData = (data.prompts &amp;&amp; typeof data.prompts === 'object') ? data.prompts : {};
+  var folderMetadata = (data.folder_metadata &amp;&amp; typeof data.folder_metadata === 'object') ? data.folder_metadata : {};
+  var settings = (data.settings &amp;&amp; typeof data.settings === 'object') ? data.settings : { view: 'grid' };
+
+  var totalPrompts = countTotalPrompts(promptsData);
+
+  // CLOUD PROTECTION: If incoming prompts are 0, but sheet already has prompts, reject empty push!
+  if (totalPrompts === 0) {
+    var existingRaw = readRawBackup(ss);
+    if (existingRaw &amp;&amp; countTotalPrompts(existingRaw.prompts) &gt; 0) {
+      return jsonResponse({
+        success: false,
+        code: 'CLOUD_PROTECTED',
+        message: 'Empty backup rejected: Google Sheet already has ' + countTotalPrompts(existingRaw.prompts) + ' prompts. Sheet protected.'
+      });
+    }
+  }
+
+  // 1. Update Prompts Sheet
+  var totalPromptsUpdated = updatePromptsSheet(ss, promptsData, folderMetadata);
+
+  // 2. Update Categories Sheet
+  var totalCategories = updateCategoriesSheet(ss, folderMetadata);
+
+  // 3. Save Full Lossless Raw Snapshot
+  var rawPayload = {
+    schema_version: data.schema_version || 3,
+    timestamp: timestampIso,
+    prompts: promptsData,
+    folder_metadata: folderMetadata,
+    settings: settings
+  };
+  saveRawBackup(ss, rawPayload);
+
+  return jsonResponse({
+    success: true,
+    code: 'BACKUP_SUCCESS',
+    message: 'Pexora backup successfully saved to Google Sheets!',
+    timestamp: timestampIso,
+    counts: {
+      prompts: totalPromptsUpdated,
+      categories: totalCategories
+    }
+  });
+}
+
+/**
+ * Handle restore request from Pexora
+ */
+function handleRestore(ss, data) {
+  // 1. Try reading lossless raw snapshot first
+  var rawData = readRawBackup(ss);
+  if (rawData &amp;&amp; rawData.prompts &amp;&amp; Object.keys(rawData.prompts).length &gt; 0) {
+    var promptCount = countTotalPrompts(rawData.prompts);
+    return jsonResponse({
+      success: true,
+      code: 'RESTORE_SUCCESS',
+      source: 'raw_snapshot',
+      backup: rawData,
+      totalPrompts: promptCount
+    });
+  }
+
+  // 2. Fallback: Reconstruct from formatted table sheets
+  var reconstructed = reconstructFromSheets(ss);
+  var count = countTotalPrompts(reconstructed.prompts);
+
+  return jsonResponse({
+    success: true,
+    code: 'RESTORE_SUCCESS',
+    source: 'table_reconstruction',
+    backup: reconstructed,
+    totalPrompts: count
+  });
+}
+
+/**
+ * Handle stats / healthcheck ping
+ */
+function handleStats(ss) {
+  var promptSheet = ss.getSheetByName(TAB_PROMPTS);
+  var promptCount = promptSheet ? Math.max(0, promptSheet.getLastRow() - 1) : 0;
+  
+  var catSheet = ss.getSheetByName(TAB_CATEGORIES);
+  var catCount = catSheet ? Math.max(0, catSheet.getLastRow() - 1) : 0;
+
+  var rawData = readRawBackup(ss);
+  if (rawData &amp;&amp; rawData.prompts) {
+    var snapshotCount = countTotalPrompts(rawData.prompts);
+    if (snapshotCount &gt; 0) promptCount = snapshotCount;
+  }
+
+  return jsonResponse({
+    success: true,
+    sheetName: ss.getName(),
+    totalPrompts: promptCount,
+    totalCategories: catCount,
+    lastBackupAt: rawData ? rawData.timestamp : null
+  });
+}
+
+// ------------------------------------------------------------------------------
+// TAB MANAGERS &amp; FORMATTERS
+// ------------------------------------------------------------------------------
+
+function getOrCreateSheet(ss, name) {
+  var sheet = ss.getSheetByName(name);
+  if (!sheet) {
+    sheet = ss.insertSheet(name);
+  }
+  return sheet;
+}
+
+function updatePromptsSheet(ss, promptsData, metadata) {
+  var sheet = getOrCreateSheet(ss, TAB_PROMPTS);
+  sheet.clearContents();
+
+  var headers = [
+    'Category', 'Subcategory', 'Title', 'Keywords', 'Prompt Content',
+    'Prompt Note', 'Favorite', 'Variable Names', 'Variable Options',
+    'Order', 'Updated At', 'Prompt ID'
+  ];
+
+  var rows = [headers];
+  var total = 0;
+
+  for (var folder in promptsData) {
+    if (!promptsData.hasOwnProperty(folder)) continue;
+    var list = promptsData[folder];
+    if (!Array.isArray(list)) continue;
+
+    for (var i = 0; i &lt; list.length; i++) {
+      var p = list[i];
+      if (!p) continue;
+      total++;
+
+      var varNamesStr = '';
+      if (p.variable_display_names &amp;&amp; typeof p.variable_display_names === 'object') {
+        var pairs = [];
+        for (var k in p.variable_display_names) {
+          if (p.variable_display_names.hasOwnProperty(k)) {
+            pairs.push(k + ': ' + p.variable_display_names[k]);
+          }
+        }
+        varNamesStr = pairs.join(' | ');
+      }
+
+      var varOptsStr = '';
+      if (p.variable_options &amp;&amp; typeof p.variable_options === 'object') {
+        var optPairs = [];
+        for (var ok in p.variable_options) {
+          if (p.variable_options.hasOwnProperty(ok)) {
+            var opts = p.variable_options[ok];
+            optPairs.push(ok + ': [' + (Array.isArray(opts) ? opts.join(', ') : String(opts)) + ']');
+          }
+        }
+        varOptsStr = optPairs.join(' | ');
+      }
+
+      rows.push([
+        p.category || folder || 'General',
+        p.subcategory || '',
+        p.title || 'Untitled Prompt',
+        p.keywords || '',
+        p.prompt || '',
+        p.note || '',
+        p.favorite ? 'Yes' : 'No',
+        varNamesStr,
+        varOptsStr,
+        p.order || 0,
+        p.updated_at || '',
+        p.id || ''
+      ]);
+    }
+  }
+
+  if (rows.length &gt; 0) {
+    sheet.getRange(1, 1, rows.length, headers.length).setValues(rows);
+    formatHeaderRow(sheet, headers.length, '#4f46e5');
+    sheet.setFrozenRows(1);
+    sheet.setFrozenColumns(1);
+  }
+
+  return total;
+}
+
+function updateCategoriesSheet(ss, metadata) {
+  var sheet = getOrCreateSheet(ss, TAB_CATEGORIES);
+  sheet.clearContents();
+
+  var headers = ['Category / Folder Name', 'Parent Category', 'Color Hex', 'Category ID'];
+  var rows = [headers];
+  var count = 0;
+
+  for (var name in metadata) {
+    if (!metadata.hasOwnProperty(name)) continue;
+    var meta = metadata[name] || {};
+    count++;
+    rows.push([
+      name,
+      meta.parent || '',
+      meta.color || '#2979FF',
+      meta.id || ''
+    ]);
+  }
+
+  if (rows.length &gt; 0) {
+    sheet.getRange(1, 1, rows.length, headers.length).setValues(rows);
+    formatHeaderRow(sheet, headers.length, '#059669');
+    sheet.setFrozenRows(1);
+    sheet.setFrozenColumns(1);
+  }
+
+  return count;
+}
+
+function formatHeaderRow(sheet, colCount, bgHex) {
+  try {
+    var range = sheet.getRange(1, 1, 1, colCount);
+    range.setBackground(bgHex || '#4f46e5');
+    range.setFontColor('#ffffff');
+    range.setFontWeight('bold');
+    range.setFontFamily('Segoe UI');
+    range.setFontSize(10);
+  } catch (_) {}
+}
+
+function saveRawBackup(ss, payload) {
+  var sheet = getOrCreateSheet(ss, TAB_RAW_BACKUP);
+  sheet.clearContents();
+  sheet.getRange(1, 1).setValue('Pexora Raw Backup Snapshot');
+  sheet.getRange(1, 2).setValue(new Date().toISOString());
+
+  // Store JSON split into 40KB safe cell chunks
+  var jsonStr = JSON.stringify(payload);
+  var chunkSize = 40000;
+  var chunks = [];
+  for (var i = 0; i &lt; jsonStr.length; i += chunkSize) {
+    chunks.push([jsonStr.substring(i, i + chunkSize)]);
+  }
+  if (chunks.length &gt; 0) {
+    sheet.getRange(2, 1, chunks.length, 1).setValues(chunks);
+  }
+  sheet.hideSheet();
+}
+
+function readRawBackup(ss) {
+  try {
+    var sheet = ss.getSheetByName(TAB_RAW_BACKUP);
+    if (!sheet) return null;
+    var lastRow = sheet.getLastRow();
+    if (lastRow &lt; 2) return null;
+    var values = sheet.getRange(2, 1, lastRow - 1, 1).getValues();
+    var full = '';
+    for (var i = 0; i &lt; values.length; i++) {
+      full += String(values[i][0] || '');
+    }
+    return JSON.parse(full);
+  } catch (err) {
+    return null;
+  }
+}
+
+function reconstructFromSheets(ss) {
+  var promptSheet = ss.getSheetByName(TAB_PROMPTS);
+  var prompts = {};
+  var metadata = {};
+
+  // Read Categories
+  var catSheet = ss.getSheetByName(TAB_CATEGORIES);
+  if (catSheet &amp;&amp; catSheet.getLastRow() &gt; 1) {
+    var catData = catSheet.getDataRange().getValues();
+    for (var c = 1; c &lt; catData.length; c++) {
+      var cName = String(catData[c][0] || '').trim();
+      if (!cName) continue;
+      metadata[cName] = {
+        parent: String(catData[c][1] || ''),
+        color: String(catData[c][2] || '#2979FF'),
+        id: String(catData[c][3] || '')
+      };
+    }
+  }
+
+  // Read Prompts
+  if (promptSheet &amp;&amp; promptSheet.getLastRow() &gt; 1) {
+    var data = promptSheet.getDataRange().getValues();
+    for (var i = 1; i &lt; data.length; i++) {
+      var row = data[i];
+      var cat = String(row[0] || 'General').trim() || 'General';
+      var sub = String(row[1] || '').trim();
+      var folder = sub || cat;
+
+      prompts[folder] = prompts[folder] || [];
+      prompts[folder].push({
+        id: String(row[11] || ('pex-' + i)),
+        category: cat,
+        subcategory: sub,
+        folder: folder,
+        title: String(row[2] || 'Untitled Prompt'),
+        keywords: String(row[3] || ''),
+        prompt: String(row[4] || ''),
+        prompt_html: '&lt;p&gt;' + String(row[4] || '').replace(/\n/g, '&lt;br&gt;') + '&lt;/p&gt;',
+        note: String(row[5] || ''),
+        favorite: String(row[6] || '').toLowerCase() === 'yes',
+        variable_display_names: {},
+        variable_options: {},
+        variable_notes: {},
+        order: Number(row[9]) || 0,
+        updated_at: String(row[10] || new Date().toISOString())
+      });
+
+      metadata[cat] = metadata[cat] || { id: '', color: '#2979FF', parent: '' };
+      if (sub) {
+        metadata[sub] = metadata[sub] || { id: '', color: metadata[cat].color, parent: cat };
+      }
+    }
+  }
+
+  return {
+    schema_version: 3,
+    timestamp: new Date().toISOString(),
+    prompts: prompts,
+    folder_metadata: metadata,
+    settings: { view: 'grid' }
+  };
+}
+
+function countTotalPrompts(promptsObj) {
+  var count = 0;
+  for (var k in promptsObj) {
+    if (promptsObj.hasOwnProperty(k) &amp;&amp; Array.isArray(promptsObj[k])) {
+      count += promptsObj[k].length;
+    }
+  }
+  return count;
+}
+
+function jsonResponse(obj) {
+  return ContentService.createTextOutput(JSON.stringify(obj))
+    .setMimeType(ContentService.MimeType.JSON);
+}
+
+/**
+ * Render Modern Web Dashboard when Web App URL is opened in browser
+ */
+function renderDashboard() {
+  var ss = SpreadsheetApp.getActiveSpreadsheet();
+  var sheetName = ss.getName();
+  var stats = handleStats(ss);
+  var statsData = JSON.parse(stats.getContent());
+
+  var totalPrompts = statsData.totalPrompts || 0;
+  var totalCats = statsData.totalCategories || 0;
+  var lastBackup = statsData.lastBackupAt ? new Date(statsData.lastBackupAt).toLocaleString() : 'No backup yet';
+
+  var html = '&lt;!DOCTYPE html&gt;' +
+    '&lt;html&gt;&lt;head&gt;&lt;meta charset="utf-8"&gt;&lt;meta name="viewport" content="width=device-width, initial-scale=1"&gt;' +
+    '&lt;title&gt;Pexora Cloud Backup Server&lt;/title&gt;' +
+    '&lt;style&gt;' +
+    '  * { box-sizing: border-box; margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; }' +
+    '  body { background: #0f172a; color: #f8fafc; min-height: 100vh; display: flex; align-items: center; justify-content: center; padding: 24px; }' +
+    '  .card { max-width: 600px; width: 100%; background: #1e293b; border: 1px solid #334155; border-radius: 16px; padding: 32px; box-shadow: 0 25px 50px -12px rgba(0,0,0,0.5); }' +
+    '  .badge { display: inline-flex; align-items: center; gap: 6px; padding: 4px 12px; border-radius: 9999px; font-size: 12px; font-weight: 600; background: #064e3b; color: #34d399; margin-bottom: 16px; }' +
+    '  .pulse { width: 8px; height: 8px; border-radius: 50%; background: #10b981; box-shadow: 0 0 10px #10b981; }' +
+    '  h1 { font-size: 24px; font-weight: 700; margin-bottom: 8px; color: #fff; }' +
+    '  p.sub { color: #94a3b8; font-size: 14px; margin-bottom: 24px; }' +
+    '  .stats-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 24px; }' +
+    '  .stat-box { background: #0f172a; border: 1px solid #334155; border-radius: 12px; padding: 16px; text-align: center; }' +
+    '  .stat-val { font-size: 28px; font-weight: 800; color: #6366f1; }' +
+    '  .stat-lbl { font-size: 12px; color: #94a3b8; text-transform: uppercase; margin-top: 4px; }' +
+    '  .info-row { display: flex; justify-content: space-between; padding: 12px 0; border-top: 1px solid #334155; font-size: 13px; color: #cbd5e1; }' +
+    '  .info-lbl { color: #64748b; }' +
+    '  .btn { display: block; text-align: center; background: #4f46e5; color: #fff; text-decoration: none; padding: 12px; border-radius: 8px; font-weight: 600; margin-top: 24px; }' +
+    '  .btn:hover { background: #4338ca; }' +
+    '&lt;/style&gt;&lt;/head&gt;&lt;body&gt;' +
+    '&lt;div class="card"&gt;' +
+    '  &lt;div class="badge"&gt;&lt;span class="pulse"&gt;&lt;/span&gt; Cloud Sync Active&lt;/div&gt;' +
+    '  &lt;h1&gt;Pexora Backup Server&lt;/h1&gt;' +
+    '  &lt;p class="sub"&gt;Your Google Sheet is connected and ready for instant two-way synchronization.&lt;/p&gt;' +
+    '  &lt;div class="stats-grid"&gt;' +
+    '    &lt;div class="stat-box"&gt;&lt;div class="stat-val"&gt;' + totalPrompts + '&lt;/div&gt;&lt;div class="stat-lbl"&gt;Prompts in Cloud&lt;/div&gt;&lt;/div&gt;' +
+    '    &lt;div class="stat-box"&gt;&lt;div class="stat-val"&gt;' + totalCats + '&lt;/div&gt;&lt;div class="stat-lbl"&gt;Categories&lt;/div&gt;&lt;/div&gt;' +
+    '  &lt;/div&gt;' +
+    '  &lt;div class="info-row"&gt;&lt;span class="info-lbl"&gt;Spreadsheet:&lt;/span&gt;&lt;strong&gt;' + sheetName + '&lt;/strong&gt;&lt;/div&gt;' +
+    '  &lt;div class="info-row"&gt;&lt;span class="info-lbl"&gt;Last Sync:&lt;/span&gt;&lt;strong&gt;' + lastBackup + '&lt;/strong&gt;&lt;/div&gt;' +
+    '  &lt;div class="info-row"&gt;&lt;span class="info-lbl"&gt;Sync Engine:&lt;/span&gt;&lt;span&gt;Pexora Instant 2-Way Sync&lt;/span&gt;&lt;/div&gt;' +
+    '  &lt;a class="btn" href="' + ss.getUrl() + '" target="_blank"&gt;Open Connected Google Sheet &amp;rarr;&lt;/a&gt;' +
+    '&lt;/div&gt;&lt;/body&gt;&lt;/html&gt;';
+
+  return HtmlService.createHtmlOutput(html)
+    .setTitle('Pexora Backup Server')
+    .setXFrameOptionsMode(HtmlService.XFrameOptionsMode.ALLOWALL);
+}
+
+</pre>
+      </div>
+    </div>
+  </div>
+
+  <!-- STEP 3 -->
+  <div class="step-card">
+    <div class="step-header">
+      <div class="step-num">৩</div>
+      <div class="step-title">Web App হিসেবে ডিপ্লয় (Deploy) করুন</div>
+    </div>
+    <div class="step-content">
+      <p>Apps Script এডিটরের উপরের ডানদিকের নীল <strong>Deploy</strong> বাটনে ক্লিক করুন:</p>
+      <ol>
+        <li><span class="key-badge">Deploy</span> &gt; <span class="key-badge">New deployment</span> এ ক্লিক করুন।</li>
+        <li>বামপাশের গিয়ার (Gear) আইকনে ক্লিক করে <span class="key-badge">Web app</span> সিলেক্ট করুন।</li>
+        <li>সেটিংসগুলো এভাবে পূরণ করুন:
+          <ul>
+            <li><strong>Description:</strong> Pexora Backup</li>
+            <li><strong>Execute as:</strong> <span style="color:#38BDF8;">Me (আপনার ইমেইল)</span></li>
+            <li><strong>Who has access:</strong> <span style="color:#10B981; font-weight:700;">Anyone</span> <em>(অবশ্যই Anyone সিলেক্ট করতে হবে)</em></li>
+          </ul>
+        </li>
+        <li><strong>Deploy</strong> বাটনে চাপ দিন এবং প্রম্পট আসলে গুগলের পারমিশন দিন (<em>Authorize Access &gt; Advanced &gt; Go to ... (unsafe) &gt; Allow</em>)।</li>
+        <li>ডিপ্লয় সম্পন্ন হলে দেওয়া <strong>Web app URL</strong> টি কপি করে নিন। (এটি দেখতে <code>https://script.google.com/macros/s/.../exec</code> এর মতো হবে)।</li>
+      </ol>
+
+      <div class="warning-box">
+        ⚠️ <strong>গুরুত্বপূর্ণ:</strong> "Who has access" অপশনে অবশ্যই <strong>Anyone</strong> সিলেক্ট করবেন। তা না হলে Pexora সফটওয়্যার ব্যাকআপ ডাটা পাঠাতে পারবে না।
+      </div>
+    </div>
+  </div>
+
+  <!-- STEP 4 -->
+  <div class="step-card">
+    <div class="step-header">
+      <div class="step-num">৪</div>
+      <div class="step-title">Pexora সফটওয়্যারে কানেক্ট করুন</div>
+    </div>
+    <div class="step-content">
+      <p>এখন Pexora সফটওয়্যারটি ওপেন করুন:</p>
+      <ol>
+        <li>উপরের ডানপাশের <span class="key-badge">Backup</span> বাটনে ক্লিক করুন।</li>
+        <li>ইনপুট বক্সে আপনার কপি করা <span class="key-badge">Web app URL</span> টি পেস্ট করুন।</li>
+        <li><span class="key-badge">Connect &amp; Test</span> বাটনে চাপ দিন।</li>
+        <li>সবুজ রঙে <strong>Connected! Sheet: "Pexora Backup"</strong> দেখাবে।</li>
+        <li>এবার <span class="key-badge">Backup to Google Sheet</span> এ ক্লিক করলেই আপনার সমস্ত প্রম্পট ক্লাউডে সুরক্ষিত হয়ে যাবে!</li>
+      </ol>
+      <div class="highlight-box">
+        ✅ <strong>অটোমেটিক ইনস্ট্যান্ট সিঙ্ক:</strong> একবার কানেক্ট করে নিলে সফটওয়্যারে কোনো প্রম্পট সেভ, এডিট, ফেভারিট বা ডিলিট করলেই তা তৎক্ষণাৎ স্বয়ংক্রিয়ভাবে আপনার গুগল শীটে ব্যাকআপ হয়ে যাবে!
+      </div>
+    </div>
+  </div>
+
+  <footer>
+    <p>Pexora &copy; 2026 Moshiur Rahman (Moshclusive). All rights reserved.</p>
+  </footer>
+</div>
+
+<script>
+function copyAppScriptCode() {
+  const codeBox = document.getElementById('appScriptCodeBox');
+  const code = codeBox.textContent;
+  
+  let copied = false;
+  // 1. Try textarea execCommand (works reliably on file:/// protocol)
+  try {
+    const ta = document.createElement('textarea');
+    ta.value = code;
+    ta.style.position = 'fixed';
+    ta.style.left = '-9999px';
+    ta.style.top = '-9999px';
+    document.body.appendChild(ta);
+    ta.focus();
+    ta.select();
+    copied = document.execCommand('copy');
+    document.body.removeChild(ta);
+  } catch (e) {
+    copied = false;
+  }
+
+  // 2. Try modern Clipboard API if execCommand didn't work
+  if (!copied && navigator.clipboard && navigator.clipboard.writeText) {
+    navigator.clipboard.writeText(code).then(() => {
+      onCopySuccess();
+    }).catch(() => {
+      selectAndPrompt();
+    });
+  } else if (copied) {
+    onCopySuccess();
+  } else {
+    selectAndPrompt();
+  }
+}
+
+function onCopySuccess() {
+  const btn = document.getElementById('copyCodeBtn');
+  btn.textContent = '✓ কপি হয়েছে!';
+  btn.style.background = '#10B981';
+  setTimeout(() => {
+    btn.textContent = 'কপি করুন';
+    btn.style.background = '#6366F1';
+  }, 2500);
+}
+
+function selectAndPrompt() {
+  const codeBox = document.getElementById('appScriptCodeBox');
+  const range = document.createRange();
+  range.selectNodeContents(codeBox);
+  const sel = window.getSelection();
+  sel.removeAllRanges();
+  sel.addRange(range);
+  alert('কোড সিলেক্ট হয়েছে! কীবোর্ডে Ctrl + C চেপে কপি করুন।');
+}
+</script>
+</body>
+</html>
+

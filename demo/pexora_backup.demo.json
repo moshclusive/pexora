@@ -1,0 +1,99 @@
+{
+ "folder_metadata": {
+  "Getting Started": {
+   "color": "#8B5CF6",
+   "id": "396b6cd1-3643-4134-a",
+   "order": 0,
+   "parent": ""
+  },
+  "Writing": {
+   "color": "#00BFA6",
+   "id": "344273b8-5bdc-4330-9",
+   "order": 1,
+   "parent": ""
+  },
+  "Image Generation": {
+   "color": "#FF8A00",
+   "id": "5477f79b-dffe-49ea-b",
+   "order": 2,
+   "parent": ""
+  }
+ },
+ "prompts": {
+  "Getting Started": [
+   {
+    "category": "Getting Started",
+    "comments": [],
+    "favorite": false,
+    "folder": "Getting Started",
+    "id": "b6deefc8-e4b9-483a-bc9b-501cb44aa215",
+    "keywords": "summary, text, shorten",
+    "note": "Replace {{text}} with the text you want summarized.",
+    "order": 0,
+    "prompt": "Summarize the text below in 5 bullet points, in plain English. Keep the key facts and numbers, and leave out repetition.\n\nText:\n{{text}}",
+    "prompt_html": "",
+    "updated_at": "2026-11-21T00:00:00.000Z",
+    "variable_options": {},
+    "variable_display_names": {},
+    "variable_notes": {}
+   }
+  ],
+  "Writing": [
+   {
+    "category": "Writing",
+    "comments": [],
+    "favorite": false,
+    "folder": "Writing",
+    "id": "4b996300-fbfc-485d-b591-09d044efa8d1",
+    "keywords": "writing, english, editing",
+    "note": "",
+    "order": 0,
+    "prompt": "Rewrite the paragraph below in clear, natural English. Fix grammar and word choice, keep the meaning exactly the same, and do not add new ideas.\n\nParagraph:\n{{paragraph}}",
+    "prompt_html": "",
+    "updated_at": "2026-11-21T00:00:00.000Z",
+    "variable_options": {},
+    "variable_display_names": {},
+    "variable_notes": {}
+   }
+  ],
+  "Image Generation": [
+   {
+    "category": "Image Generation",
+    "comments": [],
+    "favorite": false,
+    "folder": "Image Generation",
+    "id": "59d1e708-9179-4dc8-9955-27ce4f6c3527",
+    "keywords": "image, product, photo",
+    "note": "",
+    "order": 0,
+    "prompt": "Write a detailed image-generation prompt for a product photo of {{product}}: clean studio background, soft daylight, realistic materials, no text, no watermark.",
+    "prompt_html": "",
+    "updated_at": "2026-11-21T00:00:00.000Z",
+    "variable_options": {},
+    "variable_display_names": {},
+    "variable_notes": {}
+   },
+   {
+    "category": "Image Generation",
+    "comments": [],
+    "favorite": false,
+    "folder": "Image Generation",
+    "id": "f965c18e-9faa-49f1-b686-f7b490a31c23",
+    "keywords": "youtube, outline, video",
+    "note": "",
+    "order": 0,
+    "prompt": "Create a YouTube video outline about {{topic}} for a {{duration}}-minute video: hook, 3 main sections with 2-3 points each, and a short closing call to action.",
+    "prompt_html": "",
+    "updated_at": "2026-11-21T00:00:00.000Z",
+    "variable_options": {},
+    "variable_display_names": {},
+    "variable_notes": {}
+   }
+  ]
+ },
+ "schema_version": 3,
+ "settings": {
+  "view": "grid"
+ },
+ "timestamp": "2026-11-21T00:00:00.000Z"
+}

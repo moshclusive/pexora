@@ -1,0 +1,7 @@
+node_modules/
+dist/
+*.log
+.env
+pexora_backup.json
+pexora_backup.csv
+backup_server_url.txt
